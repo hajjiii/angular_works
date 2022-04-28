@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-4"></div>
+            <div class="col-4 mt-3 mb-3">
+                <select class="form-select" name="" id="select" onchange="fetchMobile()">
+                    <option value="select a mobile">Select Mobile</option>
+                </select>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <div class="row mt-5" id="result"></div>
+    </div>
+
+</body>
+<script>
+    var mobiles = [
+        { mobile_name: "A52", brand: "samsung", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "A72", brand: "samsung", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "A6", brand: "samsung", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "iphone12", brand: "apple", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "iphone12promax", brand: "apple", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "mi11", brand: "redme", price: "3400", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "mi11li", brand: "redme", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "mi10pro", brand: "redme", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "mi10promax", brand: "redme", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "realmec5", brand: "realme", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "nokiac7", brand: "nokia", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "one plus nord ce2", brand: "oneplus", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+        { mobile_name: "one plus nord 9 rt", brand: "one[lus", price: "32000", band: "5G", display: "amoled", image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3iXR3_4f7ESMpbtGVCFsjRdH7Pg1OiaSkLg520pftnpBn31wY4UsApQ2AeYUGZlQaVf3SKrp-lL8v&usqp=CAc" },
+
+    ];
+
+    var htmlData = ` `;
+    mobiles.forEach(m => {
+        htmlData += `
+        <div class="col-4 mt-5">
+            <div class="card" style="width: 18rem;">
+  <img src="${m.image}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Mobile Name:${m.mobile_name}</h5>
+    <p class="card-text">Some quick example text to build on the card title an
+        d make up the bulk of the card's content.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Brand:${m.brand}</li>
+    <li class="list-group-item">Price:${m.price}</li>
+    <li class="list-group-item">Display:${m.display}</li>
+  </ul>
+</div>
+
+
+
+
+        </div>
+        
+        `
+    })
+    document.querySelector("#result").innerHTML = htmlData
+    var select = document.querySelector("#select")
+    mobiles.forEach(m => {
+        let option = document.createElement("option")
+        option.text = m.mobile_name
+        option.value = m.mobile_name
+        select.append(option)
+    })
+
+    function fetchMobile(){
+        let m_name = document.querySelector("#select").value
+        let product = mobiles.find(m => m.mobile_name = m_name)
+        console.log(product);
+        populateValue(product)
+    }
+    function populateValue(m) {
+        let htmlData = `
+        <div class="card" style="width: 18rem;">
+  <img src="${m.image}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Mobile Name:${m.mobile_name}</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Brand:${m.brand}</li>
+    <li class="list-group-item">Price:${m.price}</li>
+    <li class="list-group-item">Display:${m.display}</li>
+  </ul>
+</div>
+        `
+        document.querySelector("#result").innerHTML = htmlData
+
+    }
+</script>
+
+</html>
